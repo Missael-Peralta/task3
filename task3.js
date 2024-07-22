@@ -61,11 +61,12 @@ class PlayRules {
         }
 
         const half = Math.floor(this.numMoves / 2);
-        if ((computerIndex > userIndex && computerIndex <= userIndex + half) ||
-            (computerIndex < userIndex && computerIndex + this.numMoves <= userIndex + half)) {
-            return 'Computer wins';
-        } else {
+        const diff = (userIndex - computerIndex + this.numMoves) % this.numMoves;
+
+        if (diff <= half && diff > 0) {
             return 'You win';
+        } else {
+            return 'Computer wins';
         }
     }
 }
@@ -109,7 +110,8 @@ class HelpTable {
                     row.push('Draw');
                 } else {
                     const half = Math.floor(this.numMoves / 2);
-                    if ((j > i && j <= i + half) || (j < i && j + this.numMoves <= i + half)) {
+                    const diff = (i - j + this.numMoves) % this.numMoves;
+                    if (diff <= half && diff > 0) {
                         row.push('Win');
                     } else {
                         row.push('Lose');
@@ -125,7 +127,7 @@ class HelpTable {
 }
 
 /**
- * Class to manage the game of Rock, Paper or Scissors.
+ * Class to manage the game of Rock, Paper, Scissors, etc.
  */
 class RockPaperScissorsGame {
     /**
@@ -140,7 +142,7 @@ class RockPaperScissorsGame {
         this.moves = moves;
 
         /**
-         * the rules of game.
+         * The rules of the game.
          * @type {PlayRules}
          */
         this.rules = new PlayRules(moves);
@@ -206,7 +208,7 @@ class RockPaperScissorsGame {
 const args = process.argv.slice(2);
 if (args.length < 3 || args.length % 2 === 0 || new Set(args).size !== args.length) {
     console.error('Error: You must provide an odd number of non-repeating strings (≥ 3) as command line arguments.');
-    console.error('Example: node game.js rock paper scissors');
+    console.error('Example: node task3.js rock paper scissors');
     process.exit(1);
 }
 
