@@ -2,22 +2,22 @@ const crypto = require('crypto');
 const Table = require("cli-table3");
 
 /**
- * Clase para generar claves y HMACs utilizando crypto.
+ * Class to generate keys and HMAC using cryptography.
  */
 class CryptoGenerate {
     /**
-     * Genera una clave aleatoria.
-     * @returns {string} La clave generada en formato hexadecimal.
+     * Generate a random key.
+     * @returns {string} The generated key in hexadecimal format.
      */
     static generateKey() {
         return crypto.randomBytes(32).toString('hex');
     }
 
     /**
-     * Genera un HMAC para un mensaje dado utilizando una clave.
-     * @param {string} key - La clave para el HMAC.
-     * @param {string} message - El mensaje para el HMAC.
-     * @returns {string} El HMAC generado en formato hexadecimal.
+     * Generates an HMAC for a given message using a key.
+     * @param {string} key - The key to HMAC.
+     * @param {string} message - The message for the HMAC.
+     * @returns {string} The HMAC generated in hexadecimal format.
      */
     static generateHMAC(key, message) {
         return crypto.createHmac('sha256', key).update(message).digest('hex');
@@ -25,32 +25,32 @@ class CryptoGenerate {
 }
 
 /**
- * Clase para determinar las reglas del juego y el ganador.
+ * Class to determine the rules of the game and the winner.
  */
 class PlayRules {
     /**
-     * Crea una nueva instancia de PlayRules.
-     * @param {string[]} moves - Las posibles jugadas del juego.
+     * Create a new PlayRules instance.
+     * @param {string[]} moves - The possible plays of the game.
      */
     constructor(moves) {
         /**
-         * Las posibles jugadas del juego.
+         * The possible plays of the game.
          * @type {string[]}
          */
         this.moves = moves;
 
         /**
-         * El número de jugadas posibles.
+         * The number of possible plays.
          * @type {number}
          */
         this.numMoves = moves.length;
     }
 
     /**
-     * Determina el ganador del juego basado en las jugadas del usuario y la computadora.
-     * @param {string} userMove - La jugada del usuario.
-     * @param {string} computerMove - La jugada de la computadora.
-     * @returns {string} El resultado del juego ('Draw', 'Computer wins', 'You win').
+     * Determines the winner of the game based on the moves of the user and the computer.
+     * @param {string} userMove - The user's move.
+     * @param {string} computerMove - The computer play.
+     * @returns {string} The result of the game ('Draw', 'Computer wins', 'You win').
      */
     determineWinner(userMove, computerMove) {
         const userIndex = this.moves.indexOf(userMove);
@@ -71,29 +71,29 @@ class PlayRules {
 }
 
 /**
- * Clase para mostrar una tabla de ayuda con los resultados posibles del juego.
+ * Class to display a help table with possible game outcomes.
  */
 class HelpTable {
     /**
-     * Crea una nueva instancia de HelpTable.
-     * @param {string[]} moves - Las posibles jugadas del juego.
+     * Create a new HelpTable instance.
+     * @param {string[]} moves - The possible plays of the game.
      */
     constructor(moves) {
         /**
-         * Las posibles jugadas del juego.
+         * The possible plays of the game.
          * @type {string[]}
          */
         this.moves = moves;
 
         /**
-         * El número de jugadas posibles.
+         * The number of possible plays.
          * @type {number}
          */
         this.numMoves = moves.length;
     }
 
     /**
-     * Muestra la tabla de ayuda en la consola.
+     * Displays the help table in the console.
      */
     display() {
         const table = new Table({
@@ -125,29 +125,29 @@ class HelpTable {
 }
 
 /**
- * Clase para gestionar el juego de Piedra, Papel o Tijeras.
+ * Class to manage the game of Rock, Paper or Scissors.
  */
 class RockPaperScissorsGame {
     /**
-     * Crea una nueva instancia de RockPaperScissorsGame.
-     * @param {string[]} moves - Las posibles jugadas del juego.
+     * Create a new instance of RockPaperScissorsGame.
+     * @param {string[]} moves - The possible plays of the game.
      */
     constructor(moves) {
         /**
-         * Las posibles jugadas del juego.
+         * The possible plays of the game.
          * @type {string[]}
          */
         this.moves = moves;
 
         /**
-         * Las reglas del juego.
+         * the rules of game.
          * @type {PlayRules}
          */
         this.rules = new PlayRules(moves);
     }
 
     /**
-     * Inicia el juego.
+     * Start the game.
      */
     start() {
         const key = CryptoGenerate.generateKey();
@@ -166,9 +166,9 @@ class RockPaperScissorsGame {
     }
 
     /**
-     * Obtiene la jugada del usuario y determina el resultado del juego.
-     * @param {string} computerMove - La jugada de la computadora.
-     * @param {string} key - La clave HMAC.
+     * Gets the user's move and determines the outcome of the game.
+     * @param {string} computerMove - The computer play.
+     * @param {string} key - The HMAC key.
      */
     getUserMove(computerMove, key) {
         const stdin = process.openStdin();
